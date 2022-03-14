@@ -1,2 +1,55 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from pprint import pprint
+
+TOKEN = '5253293576:AAEFvSgLY2JRX2yccFAjdsgGgCZputlORjM'
+updater = Updater(TOKEN, use_context=True)
+
+dispatcher = updater.dispatcher
+print("bot's working")
+
+def start(update, context):
+    chat = update.effective_chat
+    context.bot.send_message(chat_id=chat.id, text="Hello! \nWelcome to the BOT - CALCULATOR! \n So here i can calculate simple mathematical equations. \n But no more(i'm lazy).")
+    context.bot.send_message(chat_id=chat.id, text="Listen, here is one rule, you should follow: \n  - make space between the number and operation")
+    context.bot.send_message(chat_id=chat.id, text="here you got an example: 2 + 2")
+
+def any_message(update, context):
+    chat = update.effective_chat
+    our_text = update.message.text
+    b = our_text.split(' ')
+    if our_text == "Bye" or our_text == "bye" or our_text == "Goodbye" or our_text == "See you" or our_text == "See you soon":
+        context.bot.send_message(chat_id=chat.id, text="good luck!")
+    elif our_text == "Слава Україні":
+        context.bot.send_message(chat_id=chat.id, text="Героям Слава!")
+    
+    else:
+        try:
+            for i in range(len(b)):
+                n1 = int(b[0])
+                option = b[1]
+                n2 = int(b[2])
+        except:
+            context.bot.send_message(chat_id=chat.id, text="No no no no no no no. There is one rule. IS IT TOO HARD TO FOLLOW IT?!")
+            context.bot.send_message(chat_id=chat.id, text="here you got an example: 2 + 2")  
+        if option == "+":
+                result = n1 + n2
+                answer = f'answer: \n{result}'
+
+        elif option == "-":
+                result = n1 - n2
+                answer = f'answer: \n{result}'
+
+        elif option == "*" or option == "x":
+                result = n1 * n2
+                answer = f'answer: \n{result}'
+
+        elif option == "/" or ':':
+                result = n1 / n2
+                answer = f'answer: \n{result}'         
+        context.bot.send_message(chat_id=chat.id, text=answer)
+        context.bot.send_message(chat_id=chat.id, text="it was easy. What esle?")
+dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(MessageHandler(Filters.all, any_message))
+
+updater.start_polling()
+updater.idle()
