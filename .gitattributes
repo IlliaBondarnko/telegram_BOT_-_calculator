@@ -12,7 +12,6 @@ def start(update, context):
     context.bot.send_message(chat_id=chat.id, text="Hello! \nWelcome to the BOT - CALCULATOR! \n So here i can calculate simple mathematical equations. \n But no more(i'm lazy).")
     context.bot.send_message(chat_id=chat.id, text="Listen, here is one rule, you should follow: \n  - make space between the number and operation")
     context.bot.send_message(chat_id=chat.id, text="here you got an example: 2 + 2")
-
 def any_message(update, context):
     chat = update.effective_chat
     our_text = update.message.text
